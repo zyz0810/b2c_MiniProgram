@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "联系商家",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "technical-component": "/component/technical/technical",
+    "shadow-component": "/component/shadow/shadow"
+  }
+}

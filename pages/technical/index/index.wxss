@@ -1,0 +1,72 @@
+/* pages/technical11/technical11.wxss */
+
+.container {
+  font-size: 0;
+}
+
+image {
+  display: block;
+  width: 100%;
+}
+
+.slider {
+  white-space: nowrap;
+  overflow: auto;
+  padding-bottom: 0.47vw;
+  font-size: 0;
+  letter-spacing: -3px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  overflow-x: scroll;
+  padding-right: 3vw;
+  background: #fff;
+}
+
+.slider_item {
+  -webkit-flex-shrink: 0;
+  -moz-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: 71.88vw;
+  height: auto;
+  border-radius: 10px;
+  letter-spacing: 0;
+  margin-right: 9.3vw;
+}
+
+.slider_item image {
+  width: 100%;
+}
+
+.slider_item:nth-child(1) {
+  margin-left: 3.13vw;
+}
+
+.slider_item:last-child {
+  /* width: 75.01vw; */
+  padding-right: 3.13vw;
+}
+
+.phone {
+  font-size: 36rpx;
+  padding: 17vw 0 15vw;
+  line-height: 2em;
+  background: #fff;
+}
+
+.blue {
+  color: #3288ff;
+}
+
+.gray {
+  color: #999;
+}

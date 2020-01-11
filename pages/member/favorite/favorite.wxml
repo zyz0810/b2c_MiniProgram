@@ -1,0 +1,15 @@
+<!--商品列表  -->
+<import src="/template/productList/productListTemp.wxml" />
+<shadow-component />
+<view class='container'>
+  <template is="productList" data="{{data:collectList,mainColor}}"></template>
+  <view class="tips" hidden="{{showtips}}">{{tips}}</view>
+  <view class='tc' wx:if="{{collectList.length==0}}">
+    <image src='http://cdn.laiyijia.com/upload/image/201906/487f9c2a-f13d-451d-968d-4a9d10d7762e.png' style='width:360rpx;margin:30vw auto 0vw;display:block;' mode='widthFix'></image>
+    <text class='f14 clr_mediumGray'>您还没有收藏商品，快去逛逛吧~</text>
+    <view class='goScan tc' bindtap='goScan'>
+      <text style='background:{{mainColor}}' class='clr-white f14'>去逛逛</text>
+    </view>
+  </view>
+</view>
+<!-- <technical-component /> -->

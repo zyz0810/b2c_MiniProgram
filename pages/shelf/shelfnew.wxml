@@ -1,0 +1,365 @@
+<wxs src="../../wxs/imageCut.wxs" module="imageCut" />
+<wxs module="toFixed">
+  module.exports = function(num, pos) {
+    return num.toFixed(pos)
+  }
+</wxs>
+<!--authorize  -->
+<import src="/template/authorize/authorize.wxml" />
+<template is="authorize" data="{{authorizeShow}}"></template>
+<view class="container" hidden="{{list.length===0||hidePage}}">
+  <view class="header flex f16">
+    <view bindtap='goMember'>
+      <text class='iconfont icon-gerenzhongxinxia'></text>
+    </view>
+    <view class="flex-item">
+      <text class="active">门店货架</text>
+      <text bindtap='goStoreIndex'>线上商城</text>
+    </view>
+    <view>
+      <text class='iconfont icon-scan' style="visibility:hidden;"></text>
+    </view>
+  </view>
+  <view class="select f14 border_bottom">
+    <block wx:for="{{list}}" wx:key="id">
+      <view data-id="{{item.id}}" wx:if="{{item.productListModels&&item.productListModels.length>0}}" class="{{('to'+item.id) == tagActiveId?'active':''}}" bindtap="scrollInto">{{item.name}}
+      </view>
+    </block>
+  </view>
+  <scroll-view style="height:{{cartList.length>0?winHeight-bottomHeight-60:winHeight-60}}px;" scroll-into-view="{{scrollIntoId}}" bindscroll="setActiveFloor" scroll-y scroll-with-animation enable-back-to-top>
+    <official-account></official-account>
+    <view class='timeLimit' hidden='{{limitLength}}'>
+      <view class='title f20'>限时抢购
+        <text class='f16 timeLimit_tag'>惊爆秒杀价</text>
+      </view>
+      <view class='timeLimit_list'>
+        <block wx:for="{{limitsell}}" wx:key="id">
+          <view class='lineItem' data-id='{{item.id}}' bindtap='goProductDetail'>
+            <view class='left'>
+              <image mode="widthFix" lazy-load src="{{item.thumbnail ? imageCut(item.thumbnail,210,210,sys):'/resources/images/noneimg.png'}}"></image>
+            </view>
+            <view class='center'>
+              <view>
+                <view class='name f14 overtwo'>{{item.name}}</view>
+                <view class='tag'>
+                  <text class='f10'>限量{{item.personLimit}}件</text>
+                </view>
+              </view>
+              <view class='price'>
+                <text class='f20 clr_orange' style='color:{{mainColor}}'>￥{{item.price}}</text>
+                <text class='f12 old_price' hidden='{{item.price>=item.oriPrice}}'>原价￥{{item.oriPrice}}</text>
+                <text class='f14 clr_orange buy' style='color:{{mainColor}};border:1px solid {{mainColor}}' data-id='{{item.id}}'>{{item.txt}}</text>
+              </view>
+              <view class='time f10 tc'>
+                <text>{{item.countDownDay>0?item.countDownDay:0}}</text>天
+                <text>{{item.countDownHour}}</text>:
+                <text>{{item.countDownMinute}}</text>:
+                <text>{{item.countDownSecond}}</text>
+              </view>
+
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+    <view class="content">
+      <block wx:for="{{list}}" wx:key="id" wx:for-index="pIndex" wx:if="{{showModel=='smallImage'&&item.productListModels&&item.productListModels.length>0}}">
+        <view style='border:1px dashed #ddd;position:relative;top:23px;width:95%;left:2%;padding:0;'></view>
+        <view id="to{{item.id}}" class="f12 tc lineTitleSign" style="justify-content:center;padding:11px 0 4px;position:relative;z-index:111">
+          <text style="background:#f6f6f6;padding:0 10px;color:#bbb;line-height:24px">{{item.name}}</text>
+        </view>
+        <view data-id="{{item.id}}">
+          <block wx:for="{{item.productListModels}}" wx:key="id" wx:for-item="zItem">
+            <template is="goodsItem" data="{{data:zItem,tagName:item.name,cartListById}}" />
+          </block>
+        </view>
+      </block>
+
+      <block wx:for="{{list}}" wx:key="id" wx:for-index="pIndex" wx:if="{{showModel=='bigImage'&&item.productListModels&&item.productListModels.length>0}}">
+        <view style='border:1px dashed #ddd;position:relative;top:23px;width:95%;left:2%;padding:0;'></view>
+        <view id="to{{item.id}}" class="f12 tc lineTitleSign" style="justify-content:center;padding:11px 0 4px;position:relative;z-index:111">
+          <text style="background:#f6f6f6;padding:0 10px;color:#bbb;line-height:24px">{{item.name}}</text>
+        </view>
+        <view data-id="{{item.id}}">
+          <block wx:for="{{item.productListModels}}" wx:key="id" wx:for-item="zItem">
+            <view class="productItem">
+              <view class="productItemImgs" data-id="{{zItem.id}}" bindtap='goProductDetail'>
+                <block wx:if="{{zItem.images.length == 1}}">
+                  <view class="imgone">
+                    <image mode="widthFix" lazy-load src="{{imageCut(zItem.images[0].large,100,100,sys)}}"></image>
+                  </view>
+                </block>
+                <block wx:elif="{{zItem.images.length == 2}}">
+                  <view class="imgtwo">
+                    <image mode="widthFix" lazy-load src="{{imageCut(zItem.images[0].medium,49,49,sys)}}"></image>
+                    <image mode="widthFix" lazy-load src="{{imageCut(zItem.images[1].medium,49,49,sys)}}"></image>
+                  </view>
+                </block>
+                <block wx:elif="{{zItem.images.length >= 3}}">
+                  <view class="imgthree">
+                    <image mode="widthFix" lazy-load src="{{imageCut(zItem.images[0].large,65,65,sys)}}"></image>
+                    <view>
+                      <image mode="widthFix" lazy-load src="{{imageCut(zItem.images[1].thumbnail,31,31,sys)}}"></image>
+                      <image mode="widthFix" lazy-load src="{{imageCut(zItem.images[2].thumbnail,31,31,sys)}}"></image>
+                    </view>
+                  </view>
+                </block>
+              </view>
+              <view class="productDetails">
+                <view class="title overtwo f16 clr_titleWhite">{{zItem.fullName}}</view>
+                <view class="price">
+                  <text class="clr_orange f16 bold">￥{{zItem.price}}</text>
+                  <text class="sumdel f12 clr_lightGray" hidden="{{zItem.price >= zItem.marketPrice}}">￥{{zItem.marketPrice}}</text>
+                </view>
+                <!-- <view class="f12 clr_lightGray">
+                  人气{{item.hits}}/销量{{item.monthSales}}
+                </view> -->
+                <view class="cartIcon" data-id="{{zItem.id}}" data-utype="add" bindtap="editCartFn">
+                  <image src="/resources/images/home/cart.png"></image>
+                </view>
+                <view class="favoriteIcon" data-id="{{zItem.id}}" data-status="{{zItem.hasFavorite}}" bindtap="favorite" style="{{zItem.hasFavorite && authorize?'border: 1px solid #ffa73d':'border: 1px solid #999999'}}">
+                  <image src="/resources/images/icon/sstar.png" wx:if="{{zItem.hasFavorite && authorize}}"></image>
+                  <image src="/resources/images/icon/starempty.png" wx:if="{{!zItem.hasFavorite || !authorize}}"></image>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </block>
+      <view style='border-bottom:1px dashed #ddd;height:0;width:96%;margin-left:2%;padding:10rpx 0 0;'></view>
+      <view class="f12 clr_mediumGray tc" style="display:block;line-height:1.6;">
+        <view class="overone">{{storeName}}</view>
+        <view class="overone">{{address}}</view>
+      </view>
+      <!-- <view class='technical_support'>
+        <image src='/resources/images/member/technical_support.png' mode="widthFix"></image>
+      </view> -->
+    </view>
+  </scroll-view>
+  <!-- <view class="bottom-icon-shadow" wx:if="{{cartList.length}}"></view> -->
+  <view class="bottom f18" wx:if="{{cartList.length}}">
+    <view class="bottom-icon tc" bindtap="cartListToggle">
+      <text class="bottom-num" hidden="{{cartNum==0 || !authorize}}">{{cartNum}}</text>
+      <!-- <image src="/resources/images/shelf/cart.png"></image> -->
+      <text class='iconfont icon-gouwuche3 shelfColor' style='font-size:60rpx'></text>
+    </view>
+    <view class="bottom-price" bindtap="cartListToggle">￥{{!authorize?0:effectivePrice}}</view>
+    <!-- <form bindsubmit="orderCreat" report-submit> -->
+    <button open-type='getUserInfo' bindgetuserinfo="orderCreat" class="bottom-btn f16 formButton" style="{{actionsheetShow?'background:#ff6d06;':''}};margin:0;">
+      <!-- <button bindtap="orderCreat" class="bottom-btn f16 formButton" style="{{actionsheetShow?'background:#ff6d06;':''}};margin:0;"> -->
+      {{actionsheetShow?'立即付款':'确认购买'}}
+    </button>
+    <!-- </form> -->
+  </view>
+
+  <!-- <view class="dialog" animation="{{dialogAnimation}}"> -->
+  <view class="dialog" hidden="{{!dialogShow}}">
+    <view class="mask" bindtap="dialogToggle" catchtouchmove></view>
+    <view class="dialog-content">
+      <view class="dialog-title tc f16">{{listAll[swiperCurrentIndex].tagName}}</view>
+      <swiper circular current="{{swiperCurrentIndex}}" bindchange="swiperChange">
+        <block wx:for="{{listAll}}" wx:key="index">
+          <swiper-item>
+            <image mode="widthFix" data-id="{{item.id}}" src="{{item.thumbnail}}" class="slide-image" width="355" height="150" bindtap='goProductDetail' />
+            <view class="price f14 overone">{{item.name}}</view>
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="dialog-op">
+        <view class="dialog-opTitle f14 overtwo shelfColor">￥{{listAll[swiperCurrentIndex].price}}</view>
+        <view class="calc" wx:if="{{!cartListById[listAll[swiperCurrentIndex].id].quantity}}">
+          <!-- <image data-id="{{listAll[swiperCurrentIndex].id}}" data-utype="add" bindtap="editCartFn" src="/resources/images/shelf/cart.png"></image> -->
+          <text class='iconfont icon-dibuicon07 shelfColor' style='font-size:46rpx' data-id="{{listAll[swiperCurrentIndex].id}}" data-utype="add" bindtap="editCartFn"></text>
+        </view>
+        <view class="calc" wx:else>
+          <image data-id="{{listAll[swiperCurrentIndex].id}}" data-utype="reduce" bindtap="editCartFn" src="/resources/images/shelf/reduce.png"></image>
+          <!-- <input type="number" value=""></input> -->
+          <text>{{cartListById[listAll[swiperCurrentIndex].id]?cartListById[listAll[swiperCurrentIndex].id].quantity:0}}</text>
+          <image data-id="{{listAll[swiperCurrentIndex].id}}" data-utype="add" bindtap="editCartFn" src="/resources/images/shelf/add.png"></image>
+        </view>
+      </view>
+      <image class="swiperControlLeft" data-direction="left" bindtap="swiperControl" src="/resources/images/shelf/slideLeft.png"></image>
+      <image class="swiperControlRight" data-direction="right" bindtap="swiperControl" src="/resources/images/shelf/slideRight.png"></image>
+    </view>
+  </view>
+  <!-- <view class="actionsheetWrap" animation="{{asAnimation}}"> -->
+  <view class="actionsheetWrap" hidden="{{!actionsheetShow}}">
+    <view class="mask" bindtap="asToggle" catchtouchmove></view>
+    <view class="actionsheet">
+      <view class="actionsheet-head f14">
+        <view>已选商品</view>
+        <image bindtap="clearCart" src="/resources/images/icon/delete.png"></image>
+        <view bindtap="clearCart">清空</view>
+      </view>
+      <view class="actionsheet-content" wx:if="{{authorize}}">
+        <view class="acGoodsItem" wx:for="{{cartListById}}" wx:key="id">
+          <view class="acGoodsItem-title f16 overone">{{item.fullName}}</view>
+          <view class="price shelfColor f16">￥{{toFixed(item.quantity*item.price, 2)}}</view>
+          <view class="calc">
+            <image data-id="{{item.productId}}" data-utype="reduce" bindtap="editCartFnBt" src="/resources/images/shelf/reduce.png"></image>
+            <!-- <input type="number" value="1"></input> -->
+            <text>{{item.quantity}}</text>
+            <image data-id="{{item.productId}}" data-utype="add" bindtap="editCartFnBt" src="/resources/images/shelf/add.png"></image>
+          </view>
+        </view>
+      </view>
+      <view style="height:15px;"></view>
+    </view>
+  </view>
+</view>
+<button loading class="f14 loadBtn clr_lightGray" hidden="{{list.length>0}}">加载中</button>
+
+<!-- <view class='mask' catchtouchmove="true" wx:if="{{couponShow}}"></view>
+<view class='coupon' wx:if="{{couponShow}}">
+  <text class='iconfont icon-cancel cancel f30' bindtap='cancelCoupon'></text>
+  <image src='/resources/images/shelf/cupon_tit.png' class='coupon_tit' mode='widthFix'></image>
+  <view class='coupon_cont'>
+    <block wx:for="{{couponList}}" wx:key="index" wx:for-item="citem">
+
+      <view class='coupon_item' data-id='{{citem.id}}' wx:if="{{!authorize}}">
+        <view class='coupon_left fl f25'>{{citem.amount}}元</view>
+
+        <view class='coupon_middle fl'>
+          <text class='circle circle_top'></text>
+          <text class='line'></text>
+          <text class='circle circle_bottom'></text>
+        </view>
+        <view class='coupon_right fl f12'>
+          <view>满减券</view>
+          <view>满{{citem.minimumPrice}}减{{citem.amount}}</view>
+        </view>
+        <view class='coupon_revice fr f14' bindtap='reviceCoupon' data-id='{{citem.id}}'>
+          <view>立即</view>
+          <view>领取</view>
+        </view>
+      </view>
+
+      <view class='coupon_item' data-id='{{citem.id}}' wx:if="{{!citem.hasReceived && authorize}}">
+        <view class='coupon_left fl f25'>{{citem.amount}}元</view>
+
+        <view class='coupon_middle fl'>
+          <text class='circle circle_top'></text>
+          <text class='line'></text>
+          <text class='circle circle_bottom'></text>
+        </view>
+        <view class='coupon_right fl f12'>
+          <view>满减券</view>
+          <view>满{{citem.minimumPrice}}减{{citem.amount}}</view>
+        </view>
+        <view class='coupon_revice fr f14' bindtap='reviceCoupon' data-id='{{citem.id}}'>
+          <view>立即</view>
+          <view>领取</view>
+        </view>
+      </view>
+
+      <view class='coupon_item coupon_gray' data-id='{{citem.id}}' wx:if="{{citem.hasReceived && authorize}}">
+        <view class='coupon_left fl f25'>{{citem.amount}}元</view>
+
+        <view class='coupon_middle fl'>
+          <text class='circle circle_top'></text>
+          <text class='line'></text>
+          <text class='circle circle_bottom'></text>
+        </view>
+        <view class='coupon_right fl f12'>
+          <view>满减券</view>
+          <view>满{{citem.minimumPrice}}减{{citem.amount}}</view>
+        </view>
+        <view class='coupon_revice fr f14' bindtap='reviceCoupon' data-id='{{citem.id}}'>
+          <view>立即</view>
+          <view>领取</view>
+        </view>
+      </view>
+
+
+    </block>
+
+
+  </view>
+  <view class='f12 myCoupon' bindtap='myCoupon'>我的券包</view>
+</view> -->
+
+
+<!-- <view class='toMiniProgram tc'>
+  <image src='http://cdn.laiyijia.com/upload/image/201912/67805ff1-6c1f-41b3-ab12-ab7568932bb4.png'></image>
+  <view class='f14 bold tit'>南极人小程序更换通知</view>
+  <view class='cont'>
+    <view class='f12'>亲爱的用户们，为提升门店主盈利空间，</view>
+    <view class='f12'>丰富门店销售品类，现小程序需跳转使用，</view>
+    <view class='f12'>给您带来不便敬请谅解！</view>
+  </view>
+  <button bindtap='toMiniProgram' class='f16 clr-white toMiniProgramBtn'>点击跳转小程序</button>
+</view> -->
+
+<template name="goodsItem">
+  <view class="goodsItem" data-id="{{data.id}}">
+    <image bindtap="showSwiper" data-tagname="{{tagName}}" data-id="{{data.id}}" src="{{data.thumbnail}}" bindtap='goProductDetail'></image>
+    <view class="overtwo f14">{{data.name}}</view>
+    <view class="op f14">
+      <text class="price shelfColor">￥{{data.price}}</text>
+      <view class="calc">
+        <!-- <image data-id="{{data.id}}" data-utype="reduce" bindtap="editCartFn" src="/resources/images/shelf/reduce.png"></image> -->
+        <!-- <input data-id="{{data.id}}" type="number" value="{{cartListById[data.id]?cartListById[data.id].quantity:0}}"></input> -->
+        <!-- <text>{{cartListById[data.id]?cartListById[data.id].quantity:0}}</text>
+                <image data-id="{{data.id}}" data-utype="add" bindtap="editCartFn" src="/resources/images/shelf/add.png"></image> -->
+        <!-- <image data-id="{{data.id}}" data-utype="add" bindtap="editCartFn" src="/resources/images/shelf/cart.png" style="display:block;width:40rpx;height:40rpx;margin-right:10px;"></image> -->
+
+        <text class='iconfont icon-dibuicon07 shelfColor' style='font-size:46rpx;' data-id="{{data.id}}" data-utype="add" bindtap="editCartFn"></text>
+      </view>
+    </view>
+    <!-- <view class="goodsItemNum" hidden="{{!cartListById[data.id]}}">{{cartListById[data.id].quantity}}</view> -->
+  </view>
+</template>
+
+<view class="actionMask" catchtouchmove hidden="{{!showAction}}" bindtap="toggleMask"></view>
+<view class="actionContent" hidden="{{!showAction}}">
+  <view class="actionTitle border_bottom lineItem">
+    <view class="left">
+      <image src="{{selectData.thumbnail?selectData.thumbnail:productData.productImages[0].thumbnail}}" data-imgsrc='{{selectData.thumbnail}}' bindtap='prevImg'></image>
+    </view>
+    <view class="center f14">
+      <view class="f16 clr_orange bold" style='color:{{mainColor}}'>￥{{selectData.price}}</view>
+      <view>库存{{selectData.availableStock}}件</view>
+      <view>已选
+        <text class="clr_orange" style='color:{{mainColor}}'>{{selectData.specifications[0].name}} {{selectData.specifications[1].name}}</text>
+      </view>
+    </view>
+    <view class="right" bindtap="toggleMask">
+      <image src="/resources/images/icon/close.png"></image>
+    </view>
+  </view>
+  <wxs module="canClickFn">
+    module.exports = function(arr, id, selectArr) {
+      if (selectArr.length == 1) {
+        return true;
+      }
+      if (!arr) {
+        return false;
+      }
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == id) {
+          return true;
+        }
+      }
+      return false;
+    }
+  </wxs>
+  <view class="actionSpecifications">
+    <block wx:for="{{specification.all}}" wx:key="id" wx:for-index="idx">
+      <view class="actionItemTitle f16" data-id="{{item.id}}">{{item.name}}：</view>
+      <view class="actionItemBtn f16">
+        <block wx:for="{{item.specificationValues}}" wx:for-item="citem" wx:key="id">
+          <text bindtap="checkout" class=" {{canClickFn(canClick[selectArr[1-idx]],citem.id,selectArr)?'canTap':'' }}" data-idx="{{idx}}" data-can="{{canClickFn(canClick[selectArr[1-idx]],citem.id,selectArr)}}" data-id="{{citem.id}}" style="background:{{selectArr[idx] == citem.id?mainColor:''}};color:{{selectArr[idx] == citem.id?'#fff':''}}">{{citem.name}}</text>
+        </block>
+      </view>
+    </block>
+  </view>
+  <view class="actionNumber border_bottom lineItem" style="align-items:center;">
+    <view class="f16 ">购买数量:</view>
+    <view class="amount">
+      <button data-type="reduce" bindtap="revisenum">-</button>
+      <input class="f12 " type="number " data-type="input" bindchange="revisenum" value="{{selectData.quantity}}" />
+      <button data-type="add" bindtap="revisenum">+</button>
+    </view>
+  </view>
+  <button class="defaultBtn " bindtap="paySubmit" style='background:{{mainColor}}'>确认</button>
+</view>

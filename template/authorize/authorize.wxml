@@ -1,0 +1,14 @@
+<template name="authorize">
+  <view class='authorize_mask' hidden='{{!authorizeShow}}' catchtouchmove="ture"></view>
+  <view class='bg' hidden='{{!authorizeShow}}' catchtouchmove="ture">
+    <view class='f24 bold tc title'>登录确认界面</view>
+    <view class='f18 tc'>（您需要先登录，再进行此操作）</view>
+    <view class='tc'>
+      <image src='/resources/images/authorize/authorize_bg.jpg' class='authorize_bg'></image>
+    </view>
+    <view class='authorize_btn tc'>
+      <button type="default" class='cancel_btn' bindtap="cancel">暂不登录</button>
+      <button type="primary" class="clr-white submit" open-type='getUserInfo' bindgetuserinfo="bindgetuserinfo">立即登录</button>
+    </view>
+  </view>
+</template>

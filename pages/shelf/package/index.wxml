@@ -1,0 +1,94 @@
+<!--pages/shelf/package/index.wxml-->
+<import src="../../wxParse/wxParse.wxml" />
+<!--authorize  -->
+<import src="/template/authorize/authorize.wxml" />
+ <template is="authorize" data="{{authorizeShow}}"></template>
+<button loading="{{!pageLoad}}" hidden="{{pageLoad}}" class="f14 loadBtn clr_lightGray">加载中</button>
+<view hidden="{{!pageLoad}}">
+  <view class='header'>
+    <image src="{{tenantData.tenantMasterMap?tenantData.tenantMasterMap:'http://cdn.laiyijia.com/upload/image/201803/bbff5449-fe3f-45f9-8532-248958d1a580.jpg@750w_1l'}}" mode='widthFix'></image>
+    <view class='f16 clr-white headerInfo'>
+      <image src="{{tenantData.tenantLogo?tenantData.tenantLogo:'/resources/images/noneimg.png'}}" style='width:100rpx;height:100rpx;float:left;'></image>
+      {{tenantData.tenantName}}
+    </view>
+  </view>
+  <view class='brandIntroduce defaultHead' bindtap='goIntroduce'>
+    <view class='lineItem lineItem_access title'>
+      <view class='left f14'>品牌介绍</view>
+      <view class='center'></view>
+      <view class='right'></view>
+    </view>
+    <view class="wxParse content f14 clr_mediumGray overtwo" style='border-bottom:30rpx solid #fff;padding:4% 6% 0 6%;max-height:76rpx;overflow:hidden;'>
+      <template is="wxParse" data="{{wxParseData:tenantIntroduce.nodes}}" />
+    </view>
+  </view>
+
+  <view class='union defaultHead'>
+    <view class='lineItem title lineItem_access' bindtap='goOrder'>
+      <view class='left  f14'>来一架加盟</view>
+      <view class='center'></view>
+      <view class='right f14' style='font-weight:normal;'>
+        查看订单
+      </view>
+    </view>
+    <view class='lineItem border_bottom packageList' wx:for="{{tenantData.shelvesPackageList}}" wx:key="{{item.id}}" data-id="{{item.id}}" bindtap='goView'>
+      <view class='left'>
+        <image src="{{item.masterMap?item.masterMap:'/resources/images/noneimg.png'}}"></image>
+      </view>
+      <view class='center'>
+        <view class='f14 overtwo'>{{item.name}}</view>
+        <view class='f14 overtwo clr_lightGray'>{{item.promotionDesc}}</view>
+        <view class='f14 overone' style="color:{{mainColor}}">￥
+          <text class='f18 overone bold'>{{item.salePrice}}</text>
+        </view>
+      </view>
+      <view class='right'>
+        <!-- <view class='f14 butBtn' style="background:{{mainColor}}">立即购买</view> -->
+      </view>
+    </view>
+    <!-- <view class='content f14 lineItem'>
+      <view class='left'>
+        <image src='http://cdn.laiyijia.com/upload/image/201801/2e1e6d4a-2cb5-496d-97c2-bd55baac84e1.png'></image>
+      </view>
+      <view class='center'>
+        <view class='f16 '>零风险加盟</view>
+        <view class='f14 clr_lightGray'>零库存零风险加盟</view>
+      </view>
+      <view class='right'></view>
+    </view> -->
+  </view>
+
+  <view class='contact defaultHead'>
+    <view class='lineItem title'>
+      <view class='left f14 bold500'>联系方式</view>
+      <view class='center'></view>
+      <view class='right'></view>
+    </view>
+    <view class='content f14 lineItem'>
+      <view class='left'>
+      </view>
+      <view class='center'>
+        <view class='f17 '>客服电话</view>
+        <view class='f14 clr_lightGray'>9:00-22:00</view>
+      </view>
+      <view class='right' bindtap='callUs'>
+        <text class='iconfont icon-dianhua f25 clr_mediumGray'></text>
+      </view>
+    </view>
+    <view class='content f14 lineItem'>
+      <view class='left'>
+      </view>
+      <view class='center'>
+        <view class='f17 '>小程序客服</view>
+        <view class='f14 clr_lightGray'>{{tenantData.tenantName}}</view>
+      </view>
+      <button open-type="contact" hover-class="none" class="right" session-from="weapp" style='border-radius:0'>
+        <text class='iconfont icon-weixin f25 clr_mediumGray'></text>
+      </button>
+      <!-- <view class='right'>
+        <text class='iconfont icon-weixin f30'></text>
+      </view> -->
+    </view>
+  </view>
+
+</view>

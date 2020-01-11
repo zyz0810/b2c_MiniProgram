@@ -1,0 +1,7 @@
+<!--pages/member/join/index.wxml-->
+<import src="../../wxParse/wxParse.wxml" />
+<view class='f16' wx:if="{{tenantData.tenantIntroduce}}" style='overflow-x:hieeden;'>
+  <view class="wxParse  article" style='overflow-x:hieeden;'>
+    <template is="wxParse" data="{{wxParseData:tenantIntroduce.nodes}}" />
+  </view>
+</view>

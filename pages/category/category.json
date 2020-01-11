@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "分类",
+  "usingComponents": {
+    "technical-component": "/component/technicalCategory/technical",
+    "shadow-component": "/component/shadow/shadow"
+  }
+}

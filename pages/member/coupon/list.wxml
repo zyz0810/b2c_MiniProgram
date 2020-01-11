@@ -1,0 +1,33 @@
+<view class="container">
+  <shadow-component />
+  <view class="voucher">
+    <block wx:if="{{data.length>0}}">
+      <view class="list-ul">
+        <view class="list-li" style='border-bottom: {{mainColor}} solid 3px;' wx:for="{{data}}" wx:key="id" wx:for-item="item">
+          <view class="list-a">
+            <view class="li-title clr_orange" style='color:{{mainColor}}'>
+              <text class="li-h">{{item.tenantName}}</text>
+              <text class="li-em useCoupon" wx:if="{{item.used}}">已使用</text>
+              <text class="li-em" wx:if="{{!item.used}}">未使用</text>
+            </view>
+            <text class="li-time clr_orange" style='color:{{mainColor}}'>有效期{{item.endDate}}</text>
+            <view class="li-price clr_orange" style='color:{{mainColor}}'>
+              <text class="pri-icon">¥</text>
+              <text class="pri-b">{{item.amount}}</text>
+            </view>
+            <text class="pri-span clr_orange" style='color:{{mainColor}}'>优惠券</text>
+            <text class="pri-p">消费满{{item.minimumPrice}}元使用</text>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view class='tc' wx:if="{{data.length==0}}">
+      <image src='http://cdn.laiyijia.com/upload/image/201906/0bf686af-d646-4308-8e03-affa570c7a8e.png' style='width:360rpx;margin:30vw auto 0vw;display:block;' mode='widthFix'></image>
+      <text class='f14 clr_mediumGray'>您还没有相关优惠券~</text>
+      <view class='goScan tc' bindtap='goScan' style='margin-top:2vw;'>
+        <text style='background:{{mainColor}}' class='clr-white f14'>去逛逛</text>
+      </view>
+    </view>
+  </view>
+  <!-- <technical-component /> -->
+</view>

@@ -1,0 +1,7 @@
+<!--pages/member/scope/index.wxml-->
+<view>
+  <view class='iconfont icon-weixin f70 tc' style='color:#04D102;padding-top:100rpx;'></view>
+  <view class='tc  f16' style='padding-top:100rpx;margin:0 auto;width:500rpx;'>为了更好的用户体验，请您授权微信信息后继续使用</view>
+  <button type="primary" class="submit" open-type='getUserInfo' bindgetuserinfo="bindgetuserinfo">确认授权</button>
+  <button type="default" class='cancel' bindtap="cancel">取消授权</button>
+</view>

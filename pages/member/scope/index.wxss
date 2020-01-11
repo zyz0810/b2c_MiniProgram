@@ -1,0 +1,19 @@
+/* pages/member/scope/index.wxss */
+
+page {
+  background: #fff;
+}
+
+.submit {
+  width: 86%;
+  line-height: 2;
+  background: #08bb06;
+  color: #fff;
+  margin-top: 150px;
+}
+
+.cancel {
+  width: 86%;
+  line-height: 2;
+  margin-top: 30px;
+}

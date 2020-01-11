@@ -1,0 +1,79 @@
+<!--authorize  -->
+<import src="/template/authorize/authorize.wxml" />
+ <template is="authorize" data="{{authorizeShow}}"></template>
+<view class="lineItem memberTop" wx:if="{{authorize}}">
+  <view class="left">
+    <open-data type="userAvatarUrl" style="overflow: hidden;" class="image"></open-data>
+  </view>
+  <view class="center">
+    <open-data type="userNickName" class="name overone clr_white f14"></open-data>
+    <view class='f14'>{{userInfo.mobile?userInfo.mobile:""}}</view>
+  </view>
+  <view class="right">
+  </view>
+</view>
+
+<view class="lineItem memberTop" wx:if="{{!authorize}}">
+  <view class="left head">
+    <view class="image" wx:if="{{!authorize}}">
+      <image src='/resources/images/usernone.png'></image>
+    </view>
+  </view>
+  <view class="center">
+    <view class="name clr_white f14" wx:if="{{!authorize}}">
+      <text class='login_btn f12' style='color:{{mainColor}};border: 1px solid {{mainColor}};' bindtap='goAuthorize'>登录/注册</text>
+    </view>
+  </view>
+  <view class="right">
+  </view>
+</view>
+
+<view class="content f16">
+  <view class="lineItem lineItem_access" bindtap="allOrder">
+    <view class="left">
+      <text class="iconfont icon-dingdan1"></text>
+    </view>
+    <view class="center">
+      <view>全部订单</view>
+    </view>
+    <view class="right">
+    </view>
+  </view>
+
+  <view class="lineItem lineItem_access" bindtap="allCoupon">
+    <view class="left">
+      <text class="iconfont icon-tixian"></text>
+    </view>
+    <view class="center">
+      <view>我的券包</view>
+    </view>
+    <view class="right">
+    </view>
+  </view>
+
+  <view class="lineItem lineItem_access" bindtap="feedback">
+    <view class="left">
+      <text class="iconfont icon-yijianfankui"></text>
+    </view>
+    <view class="center">
+      <view>意见反馈</view>
+    </view>
+    <view class="right">
+    </view>
+  </view>
+
+  <view class="lineItem lineItem_access" bindtap="callUs">
+    <view class="left">
+      <text class="iconfont icon-service"></text>
+    </view>
+    <view class="center">
+      <view>我的客服</view>
+    </view>
+    <view class="right">
+    </view>
+  </view>
+</view>
+<button class="backToindex defaultBtn shelfBg" bindtap="backToindex">返回购物首页</button>
+<!-- <view class='technical_support'>
+  <image src='/resources/images/member/technical_support.png' mode="widthFix"></image>
+</view> -->

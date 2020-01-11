@@ -1,0 +1,100 @@
+<include src="/template/actionsheet/actionsheet.wxml" />
+<include src="/template/password/payPassword.wxml" />
+<!--pages/pay/pay.wxml-->
+<button loading class="f16 loadBtn" hidden="{{homeLoadReady}}">加载中</button>
+<view wx:if="{{homeLoadReady}}">
+  <view class='f16  payStyleTitle'>配送方式：</view>
+  <radio-group class="radio-group" bindchange="radioChange">
+    <label class="radio f16" wx:for="{{objectshippingMethods}}" wx:if="{{item.method=='PRIVY'}}" wx:key="id">
+      <radio value="{{index}}" color='{{mainColor}}' checked="{{item.method=='PRIVY'}}" />{{item.name}}
+    </label>
+  </radio-group>
+
+  <view wx:for="{{order.trades}}" wx:key="id" wx:for-item="item" class='order_product'>
+    <view class='lineItem f14 tenant'>
+      <view class='center'>
+        <text class='iconfont icon-dianpu bold f20'></text>{{item.tenantName}}</view>
+    </view>
+
+    <view class='lineItem product' wx:for="{{item.orderItems}}" wx:key="id" wx:for-item="orderitem">
+      <view class='left product_img'>
+        <image src='{{orderitem.thumbnail}}'></image>
+      </view>
+      <view class='center product_txt'>
+        <view class='f14'>{{orderitem.name}}</view>
+        <view class='f12'>{{orderitem.spec}}</view>
+        <view class='lineItem f16 clr_orange price' style='color:{{mainColor}}'>
+          <view class='center'>￥{{orderitem.price}}</view>
+          <view class='right'>X{{orderitem.quantity}}</view>
+        </view>
+      </view>
+    </view>
+    <view wx:for="{{calcuPrice}}" wx:key="id" wx:for-item="calcitem">
+      <view class='lineItem f14 lineItem_access' wx:if="{{order.trades[index].availableCoupons.length>0 && authorize}}" bindtap="toogleCouponSelect">
+        <view class='center' style='flex-direction:row;justify-content:flex-start;'>优惠券
+          <text style="color:white;padding:0 20rpx;margin-left:20rpx;background:{{mainColor}}">{{order.trades[index].availableCoupons.length}}张可用</text>
+        </view>
+        <view class='right' style='color:{{selectCoupon.code?mainColor:""}}'>{{selectCoupon.name}}</view>
+      </view>
+      <view class='lineItem f14'>
+        <view class='center'>快递运费</view>
+        <view class='right'>￥{{calcitem.freight}}</view>
+      </view>
+      <view class='lineItem border_bottom f14 word'>
+        <view class='left'>买家留言：</view>
+        <view class='center'>
+          <input maxlength="500" placeholder="给商家留言（500字以内）" bindblur='inputMemo' />
+        </view>
+      </view>
+      <view class='lineItem lineH_two f14'>
+        <view class='center tr'>小计：</view>
+        <view class='right clr_orange f16' style='color:{{mainColor}}'>￥{{calcitem.amount}}</view>
+      </view>
+    </view>
+
+
+    <view class='selectGuide f14' style='border-top:5px solid #eee' hidden='{{ifshowGuide}}'>
+      <view class="section">
+        <picker bindchange="guideChange" range-key='name' range="{{guideList}}">
+          <view class="picker lineItem lineItem_access f14">
+            <view class='center'>选择服务导购</view>
+            <view class='right'>{{guideList[guideId].name}}</view>
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+
+  <view class='lineItem lineH_three f16 bottom'>
+    <view class='center tc clr_orange' style='color:{{mainColor}}'>实付款：￥{{amount}}</view>
+    <button class='right' open-type='getUserInfo' bindgetuserinfo="formSubmit" style='border-radius:0;background:{{mainColor}}'>确认下单</button>
+  </view>
+  <!-- </form> -->
+
+  <view class="couponSelect" hidden="{{!showCouponSelect}}">
+    <view class="couponmask" bindtap="toogleCouponSelect"></view>
+    <view class="couponContent">
+      <view class="couponSelectTitle f16">
+        可用优惠券
+        <!-- <image src="/resources/images/icon/close.png"></image> -->
+      </view>
+      <view class="couponList">
+        <block wx:for="{{order.trades[0].availableCoupons}}" wx:key="codeId">
+          <view class="lineItem f14 border_bottom" data-name="{{item.title}}" data-id="{{item.codeId}}" data-code="{{item.code}}" bindtap="selectCoupon">
+            <view class="center">
+              <view class="clr_orange" style='color:{{mainColor}}'>{{item.title}}</view>
+              <view>使用期限:{{item.endDate}}</view>
+            </view>
+            <view class="right" style='background:{{mainColor}}'>
+              <view style="color:white;padding:10rpx 20rpx;border-radius:10rpx;background:{{mainColor}}">使用</view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view class="couponOp flex f16">
+        <view style="background:#919191;" bindtap="selectCoupon">取消使用</view>
+        <view style='background:{{mainColor}}' bindtap="toogleCouponSelect">关闭</view>
+      </view>
+    </view>
+  </view>
+</view>

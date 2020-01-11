@@ -1,0 +1,19 @@
+@import "../../wxParse/wxParse.wxss";
+
+page {
+  background: #fff;
+}
+
+.article {
+  background: #fff;
+  position: relative;
+  z-index: 99;
+}
+
+.wxParse-video {
+  width: 96vw !important;
+}
+
+.wxParse-video .wxParse-video-video {
+  width: 96vw !important;
+}

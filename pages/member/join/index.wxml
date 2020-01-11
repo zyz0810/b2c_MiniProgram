@@ -1,0 +1,10 @@
+<!--pages/member/join/index.wxml-->
+<import src="../../wxParse/wxParse.wxml" />
+<view class='product_introduction' wx:if="{{productData.unionData}}">
+  <view class="wxParse  article">
+    <template is="wxParse" data="{{wxParseData:unionData.nodes}}" />
+  </view>
+</view>
+<view class='product_introduction' wx:if="{{!productData.unionData}}">
+  <view class='padding2 f16'>暂无加盟信息，敬请期待</view>
+</view>

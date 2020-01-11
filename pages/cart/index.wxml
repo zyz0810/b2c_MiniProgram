@@ -1,0 +1,169 @@
+<wxs src="../../wxs/imageCut.wxs" module="imageCut" />
+<button loading hidden="{{cartList.length > 0||getDataComplete||!authorize}}" class="f14 loadBtn clr_lightGray">加载中</button>
+<shadow-component />
+<!--未授权状态，商城购物车显示没有数据authorize-->
+<view class="cart" wx:if="{{!authorize && currentTab==0}}">
+  <image src="https://cdn.laiyijia.com/upload/image/201906/15f5193a-360a-4a0f-bcde-76dba3eeeba6.png" />
+  <view class='tc'>购物车什么都没有，赶快去购物吧</view>
+  <button type="primary" size="mini" bindtap="goIndex" hover-class="none" style='background:{{mainColor}}'> 去逛逛 </button>
+  <technical-component />
+</view>
+<!--要是商城购物车没有数据，就行显示没有数据authorize-->
+<view class="cart" wx:if="{{cartList.length == 0 && getDataComplete && currentTab==0 && authorize}}">
+  <image src="https://cdn.laiyijia.com/upload/image/201906/15f5193a-360a-4a0f-bcde-76dba3eeeba6.png" />
+  <view class='tc'>购物车什么都没有，赶快去购物吧</view>
+  <button type="primary" size="mini" bindtap="goIndex" hover-class="none" style='background:{{mainColor}}'> 去逛逛 </button>
+  <technical-component />
+</view>
+<!--未授权状态下，货架购物车显示没有数据-->
+<view class="cart" wx:if="{{!authorize && currentTab==1}}">
+  <image src="https://cdn.laiyijia.com/upload/image/201906/15f5193a-360a-4a0f-bcde-76dba3eeeba6.png" />
+  <view class='tc'>购物车什么都没有，赶快去购物吧</view>
+  <button type="primary" size="mini" bindtap="goIndex" hover-class="none" style='background:{{mainColor}}'> 去逛逛 </button>
+  <technical-component />
+</view>
+<!--要是货架购物车没有数据，就行显示没有数据-->
+<view class="cart" wx:if="{{cartListShelf.length==0 && getDataComplete && currentTab==1 && authorize}}">
+  <image src="https://cdn.laiyijia.com/upload/image/201906/15f5193a-360a-4a0f-bcde-76dba3eeeba6.png" />
+  <view class='tc'>购物车什么都没有，赶快去购物吧</view>
+  <button type="primary" size="mini" bindtap="goIndex" hover-class="none" style='background:{{mainColor}}'> 去逛逛 </button>
+  <technical-component />
+</view>
+<view class='flex tc f16 selectTab' wx:if="{{shelvesNo}}">
+  <view class='flex-item' bindtap='clickTab' data-type="0">
+    <text style="color:{{currentTab==0 ? mainColor : ''}};border-bottom:2px solid {{currentTab==0 ?  mainColor: 'transparent'}}">商城</text>
+  </view>
+  <view class='flex-item' bindtap='clickTab' data-type="1">
+    <text style="color:{{currentTab==1 ? mainColor : ''}};border-bottom:2px solid {{currentTab==1 ?  mainColor: 'transparent'}}">货架</text>
+  </view>
+</view>
+<!--要是有数据，就显示数据-->
+<view class='cart_cont ' wx:if="{{cartList.length > 0 && currentTab==0 && authorize}}" style="padding-top:{{shelvesNo?'82rpx':'0'}}">
+
+  <view class="cartList">
+    <view class="" hidden="{{!mailPromotion}}">
+      <view class="padding2 f16 border_bottom">
+        <text class="f14 clr_orange tip" style='color:{{mainColor}};border:1px solid {{mainColor}} '>满邮</text>{{mailPromotion.name}}</view>
+    </view>
+    <checkbox-group bindchange="checkItemChange">
+      <block wx:for="{{cartList}}" wx:key="id">
+        <view class="cartItem border_bottom">
+          <label class="checkbox">
+            <checkbox value="{{item.id}}" checked="{{item.selected}}" color='{{mainColor}} ' />
+            <!-- <icon wx:if="{{item.selected}}" type="success" size="18" color='{{mainColor}} ' style='position:absolute;top:96rpx;left:16rpx ' /> -->
+          </label>
+          <view class="image" bindtap='goProductDetail' data-from="shop" data-id="{{item.productId}}">
+            <image class="thumbnail" src="{{imageCut(item.thumbnail,14,14,sys)}}"></image>
+          </view>
+          <view class="detail">
+            <view class="overone f16">{{item.fullName}}</view>
+            <view class="specification f12" style="line-height:1.4;">
+              <block wx:for="{{item.specification}}" wx:key="id" wx:for-item="specification">
+                <text class='clr_lightGray '>{{specification.title}}:</text>
+                <text class="clr_lightGray">{{specification.name}} </text>
+              </block>
+            </view>
+            <view class="price">
+              <text class="clr_orange f16" style='color:{{mainColor}} '>￥{{item.price}}</text>
+              <text class="sumdel f12 clr_lightGray">￥{{item.marketPrice}}</text>
+            </view>
+            <block wx:for="{{item.promotions}}" wx:key="id" wx:for-item="promotions">
+              <view class="promotions f12">
+                <image src="/resources/images/icon/icon-{{promotions.type}}.png" class="promotionsicon"></image>
+                <text>{{promotions.name}}</text>
+              </view>
+            </block>
+            <view class="op">
+              <view class="amount">
+                <button bindtap="revisenum" data-id="{{item.id}}" data-type="reduce" data-min="{{item.minReserve}}" data-num="{{item.quantity}}">-</button>
+                <input bindchange="inputnum" data-id="{{item.id}}" class="f12" type="number" value="{{item.quantity}}" />
+                <button data-id="{{item.id}}" data-type="add" data-min="{{item.minReserve}}" data-num="{{item.quantity}}" bindtap="revisenum">+</button>
+              </view>
+              <image bindtap="deleteItem" data-name="{{item.fullName}}" data-id="{{item.id}}" class="delete" src="/resources/images/icon/delete.png"></image>
+            </view>
+          </view>
+        </view>
+      </block>
+
+    </checkbox-group>
+  </view>
+  <technicalCart-component />
+  <checkbox-group bindchange="checkAllChange">
+    <form bindsubmit="submit" report-submit data-type="cart">
+      <view class="tab" hidden="{{cartList.length == 0}}">
+        <label class="checkAll f14">
+          <checkbox value="true" checked="{{checkAll}}" color='{{mainColor}} ' />
+          <!-- <icon wx:if="{{checkAll && total>0}}" type="success" size="18" color='{{mainColor}} ' style='position:absolute;top:33rpx; ' /> -->
+          <text>全选</text>
+        </label>
+        <view class="total f14">
+          <text>合计:￥{{total}}</text>
+        </view>
+        <button form-type="submit" class="submit f14 formButton" style='background:{{mainColor}} '>
+          结算
+        </button>
+      </view>
+    </form>
+  </checkbox-group>
+</view>
+<view class='cart_cont ' wx:if="{{cartListShelf.length > 0 && currentTab==1 && authorize}}">
+  <view class="cartList">
+    <!-- <checkbox-group bindchange="checkItemChangeShelf"> -->
+    <block wx:for="{{cartListShelf}}" wx:key="{{item.id}}">
+      <view class="cartItem border_bottom">
+        <!-- <label class="checkbox" style='visibility:hidden'>
+          <checkbox value="{{item.id}}" checked="{{item.selected}}" color='{{mainColor}} ' />
+        </label> -->
+        <view class="image" bindtap='goProductDetail' data-from="shelf" style='margin-left:2vw;' data-id="{{item.productId}}">
+          <image class="thumbnail" src="{{imageCut(item.thumbnail,14,14,sys)}}"></image>
+        </view>
+        <view class="detail">
+          <view class="overone f16">{{item.fullName}}</view>
+          <view class="specification f12" style="line-height:1.4;">
+            <block wx:for="{{item.specification}}" wx:key="id" wx:for-item="specification">
+              <text class='clr_lightGray '>{{specification.title}}:</text>
+              <text class="clr_lightGray">{{specification.name}} </text>
+            </block>
+          </view>
+          <view class="price">
+            <text class="clr_orange f16" style='color:{{mainColor}} '>￥{{item.price}}</text>
+            <text class="sumdel f12 clr_lightGray">￥{{item.marketPrice}}</text>
+          </view>
+          <block wx:for="{{item.promotions}}" wx:key="id" wx:for-item="promotions">
+            <view class="promotions f12">
+              <image src="/resources/images/icon/icon-{{promotions.type}}.png" class="promotionsicon"></image>
+              <text>{{promotions.name}}</text>
+            </view>
+          </block>
+          <view class="op">
+            <view class="amount">
+              <button bindtap="revisenumShelf" data-id="{{item.id}}" data-type="reduce" data-min="{{item.minReserve}}" data-num="{{item.quantity}}">-</button>
+              <input bindchange="inputnumShelf" data-id="{{item.id}}" class="f12" type="number" value="{{item.quantity}}" />
+              <button data-id="{{item.id}}" data-type="add" data-min="{{item.minReserve}}" data-num="{{item.quantity}}" bindtap="revisenumShelf">+</button>
+            </view>
+            <image bindtap="deleteItemShelf" data-name="{{item.fullName}}" data-id="{{item.id}}" class="delete" src="/resources/images/icon/delete.png"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- </checkbox-group> -->
+  </view>
+  <checkbox-group bindchange="checkAllChangeShelf">
+    <form bindsubmit="submitShelf" report-submit data-type="cart">
+      <view class="tab" hidden="{{cartListShelf.length == 0}}">
+        <!-- <label class="checkAll f14">
+          <checkbox value="true" checked="{{checkAllShelf}}" color='{{mainColor}} ' />
+          <icon wx:if="{{checkAll && total>0}}" type="success" size="18" color='{{mainColor}} ' style='position:absolute;top:33rpx; ' />
+          <text>全选</text>
+        </label> -->
+        <view class="total f14">
+          <text>合计:￥{{totalShelf}}</text>
+        </view>
+        <button form-type="submit" class="submit f14 formButton" style='background:{{mainColor}} '>
+          结算
+        </button>
+      </view>
+    </form>
+  </checkbox-group>
+</view>

@@ -1,0 +1,21 @@
+<!--商品列表  -->
+<import src="/template/productList/productListTemp.wxml" />
+<!--search  -->
+<import src="/template/search/search.wxml" />
+<view class='container'>
+  <view class="tab">
+    <template is="search" data="{{position:'relative',background:mainColor,val:keyWord}}"></template>
+    <view class="tabList f14">
+      <view data-index='0' bindtap='sortToggle' style="color:{{activeTabIndex == 0?mainColor:''}}">综合排序</view>
+      <view data-index='1' bindtap='sortToggle' hidden='{{!showUp}}' style="color:{{activeTabIndex == 1?mainColor:''}}">价格升序</view>
+      <view data-index='2' bindtap='sortToggle' hidden='{{showUp}}' style="color:{{activeTabIndex == 2?mainColor:''}}">价格降序</view>
+      <view data-index='3' bindtap='sortToggle' style="color:{{activeTabIndex == 3?mainColor:''}}">销量优先</view>
+    </view>
+    <view class="checkout" bindtap="checkoutShowType">
+      <image src="/resources/images/icon/details.png"></image>
+    </view>
+  </view>
+  <button loading hidden="{{getDataComplete}}" class="f14 loadBtn clr_lightGray">加载中</button>
+  <template is="productList" data="{{showType,data:productData,mainColor}}"></template>
+  <view class="tips" hidden="{{showtips}}">{{tips}}</view>
+</view>

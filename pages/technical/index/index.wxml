@@ -1,0 +1,37 @@
+<!--pages/technical11/technical11.wxml-->
+<view class='container'>
+  <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_img01.png' mode='widthFix'></image>
+  <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_img02.png' mode='widthFix'></image>
+  <view class='case'>
+    <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_lunbo00.png' mode='widthFix'></image>
+  </view>
+  <view class='slider'>
+    <view class='slider_item'>
+      <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_lunbo01.png' mode='widthFix'></image>
+    </view>
+    <view class='slider_item'>
+      <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_lunbo02.png' mode='widthFix'></image>
+    </view>
+    <view class='slider_item'>
+      <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_lunbo03.png' mode='widthFix'></image>
+    </view>
+    <view class='slider_item'>
+      <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_lunbo04.png' mode='widthFix'></image>
+    </view>
+    <view class='slider_item'>
+      <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_lunbo05.png' mode='widthFix'></image>
+    </view>
+    <view class='slider_item'>
+      <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_lunbo06.png' mode='widthFix'></image>
+    </view>
+  </view>
+  <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_img03.png' mode='widthFix'></image>
+  <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_img04.png' mode='widthFix'></image>
+  <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_img05.png' mode='widthFix'></image>
+  <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_img06.png' mode='widthFix'></image>
+  <view class="phone tc">
+    <view class="blue" bindtap='callUs'>电话咨询：0551-63676688</view>
+    <view class="gray">周一至周日 09:00~18:00</view>
+  </view>
+  <image src='https://www.tiaohuo.com/resources/wap/3.0/image/static/techsupport/tiaohuo_img07.png' mode='widthFix'></image>
+</view>

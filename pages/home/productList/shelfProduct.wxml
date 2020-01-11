@@ -1,0 +1,38 @@
+<!--商品列表  -->
+<import src="/template/productList/productListTemp.wxml" />
+<!--search  -->
+<!-- <import src="/template/search/search.wxml" /> -->
+<view class='container'>
+  <!-- <view class="tab">
+    <template is="search" data="{{position:'relative',background:mainColor,val:keyWord}}"></template>
+    <view class="tabList f14">
+      <view data-index='0' bindtap='sortToggle' style="color:{{activeTabIndex == 0?mainColor:''}}">综合排序</view>
+      <view data-index='1' bindtap='sortToggle' hidden='{{!showUp}}' style="color:{{activeTabIndex == 1?mainColor:''}}">价格升序</view>
+      <view data-index='2' bindtap='sortToggle' hidden='{{showUp}}' style="color:{{activeTabIndex == 2?mainColor:''}}">价格降序</view>
+      <view data-index='3' bindtap='sortToggle' style="color:{{activeTabIndex == 3?mainColor:''}}">销量优先</view>
+    </view>
+    <view class="checkout" bindtap="checkoutShowType">
+      <image src="/resources/images/icon/details.png"></image>
+    </view>
+  </view> -->
+  <button loading hidden="{{getDataComplete}}" class="f14 loadBtn clr_lightGray">加载中</button>
+  <view class="productList {{showType?'productListLine':''}}">
+    <block wx:for="{{productData}}" wx:key="id">
+      <view bindtap="__pt_toDetail" class="proReItem" data-id="{{item.id}}">
+        <image mode="widthFix" src="{{item.thumbnail ? item.thumbnail: '../../../resources/images/noneimg.png'}}"></image>
+        <view class="details">
+          <view class="title overtwo f14">{{item.name}}</view>
+          <view class="price" wx:if="{{item.price == item.marketPrice}}">
+            <text class="clr_orange f16" data-id='{{item.marketPrice}}' style='color:{{mainColor?mainColor:""}}'>￥{{item.price}}</text>
+          </view>
+          <view class="price" wx:else>
+            <text class="clr_orange f16" style='color:{{mainColor?mainColor:""}}'>￥{{item.price}}</text>
+            <text class="sumdel f12 clr_lightGray marketPrice">￥{{item.marketPrice}}</text>
+          </view>
+          <!-- <view class="f12 clr_lightGray">月销量{{item.monthSales}}</view> -->
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="tips" hidden="{{showtips}}">{{tips}}</view>
+</view>
